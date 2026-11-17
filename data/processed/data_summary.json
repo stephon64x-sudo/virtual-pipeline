@@ -1,0 +1,38 @@
+{
+ "Wajir": {
+  "annual_rain_mm": {
+   "2019": 408,
+   "2020": 433,
+   "2021": 225,
+   "2022": 170,
+   "2023": 626
+  },
+  "s2_scenes": 359,
+  "s2_cloudy_scenes": 208,
+  "longest_gap_without_clear_image_days": 120
+ },
+ "Mandera": {
+  "annual_rain_mm": {
+   "2019": 405,
+   "2020": 263,
+   "2021": 209,
+   "2022": 126,
+   "2023": 584
+  },
+  "s2_scenes": 359,
+  "s2_cloudy_scenes": 157,
+  "longest_gap_without_clear_image_days": 49
+ },
+ "NorthHorr": {
+  "annual_rain_mm": {
+   "2019": 213,
+   "2020": 209,
+   "2021": 52,
+   "2022": 125,
+   "2023": 280
+  },
+  "s2_scenes": 721,
+  "s2_cloudy_scenes": 253,
+  "longest_gap_without_clear_image_days": 41
+ }
+}

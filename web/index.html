@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Virtual Pipeline: early warnings for desert wells</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">{"imports": {"three": "./vendor/three.module.js"}}</script>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <span class="rope-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <div><strong>Virtual Pipeline</strong><span>Early warnings for desert wells, northern Kenya</span></div>
+  </div>
+  <div class="clock"><span id="date">Loading</span><small id="dateNote"></small></div>
+  <div class="controls">
+    <div class="seg" id="modeSeg" role="group" aria-label="Mode">
+      <button data-mode="replay" aria-pressed="true">Replay 2019 to 2023</button>
+      <button data-mode="live" aria-pressed="false">Live demo</button>
+    </div>
+    <button id="play" class="primary">Play</button>
+    <label class="speed">Speed
+      <select id="speed"></select>
+    </label>
+  </div>
+</header>
+
+<main>
+  <section class="stage" aria-label="Map of wells">
+    <div class="stage-bar">
+      <div class="seg" id="siteSeg" role="group" aria-label="Area"></div>
+      <div class="seg" id="viewSeg" role="group" aria-label="View">
+        <button data-view="region" aria-pressed="true">Region</button>
+        <button data-view="well" aria-pressed="false">Inside the well</button>
+      </div>
+    </div>
+    <canvas id="gl"></canvas>
+    <p id="glFallback" class="gl-fallback" hidden>3D view needs WebGL, which this browser has turned off. Everything else on the page still works.</p>
+    <ul class="key" aria-label="Status key">
+      <li><b class="st ok">●</b> OK</li><li><b class="st watch">▲</b> Watch: ration</li>
+      <li><b class="st act">◆</b> Act: move herds</li><li><b class="st dry">✕</b> Dry</li>
+    </ul>
+    <div class="live-panel" id="livePanel" hidden>
+      <div class="station"><span class="dot" id="stDot"></span><div><b id="liveStatus"></b><small id="liveSub"></small></div></div>
+      <svg id="spark" viewBox="0 0 180 36" role="img" aria-label="Water level over the last minute"></svg>
+      <div class="row">
+        <button id="drain">Drain well</button>
+        <button id="refill">Refill</button>
+        <button id="unplug">Unplug sensor</button>
+      </div>
+      <div class="row" id="calRow" hidden>
+        <button id="calFull">Container is full now</button>
+        <button id="calEmpty">Container is empty now</button>
+      </div>
+      <label><input type="checkbox" id="autoRope" checked> Herders keep texting</label>
+      <button id="connect">Connect a pi-top</button>
+    </div>
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <aside class="side">
+    <section class="card" id="wellCard" aria-live="off"></section>
+    <section class="card tabs">
+      <div class="tablist" role="tablist" id="tablist">
+        <button role="tab" data-tab="phone" aria-selected="true">Herder's phone</button>
+        <button role="tab" data-tab="aid" aria-selected="false">Aid agency</button>
+        <button role="tab" data-tab="trust" aria-selected="false">False alarms vs misses</button>
+      </div>
+      <div id="tabPanel" role="tabpanel"></div>
+    </section>
+  </aside>
+</main>
+
+<footer class="timeline">
+  <svg id="timeline" viewBox="0 0 1000 64" preserveAspectRatio="none" role="slider" aria-label="Date" tabindex="0"></svg>
+  <div class="tl-labels" id="tlLabels"></div>
+</footer>
+<div id="tip" class="tip" hidden></div>
+<div id="toast" class="toast" role="status" hidden></div>
+<dialog id="connectDlg">
+  <h2>Connect the pi-top field station</h2>
+  <ol>
+    <li>Put the laptop and the pi-top on the same WiFi or phone hotspot.</li>
+    <li>Copy the sensor program to the pi-top: <a href="/pitop/well_sensor.py" download>download well_sensor.py</a></li>
+    <li>Plug the ultrasonic sensor into port D3 and fix it above the water, facing straight down.</li>
+    <li>On the pi-top run:<br><code id="cmd">python3 well_sensor.py LAPTOP-ADDRESS</code> <button id="copyCmd">Copy</button></li>
+    <li>When this bar shows the sensor live: fill the container and press <b>Container is full now</b>, pour it out and press <b>Container is empty now</b>, then refill.</li>
+  </ol>
+  <p id="dlgState" class="hint"></p>
+  <form method="dialog"><button class="primary">Close</button></form>
+</dialog>
+<script type="module" src="app.js"></script>
+</body>
+</html>
